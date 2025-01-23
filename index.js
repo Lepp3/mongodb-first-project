@@ -44,7 +44,12 @@ try{
 
 const studentSchema = new Schema({
     name: String,
-    age: Number,
+    age: {
+        type: Number,
+        required: true,
+        min: [18, 'Student age should be between 18 and 120 inclusive!'],
+        max: 120
+    },
 });
 
 // mongoose model
@@ -100,3 +105,22 @@ console.log(singleStudent.getInfo());
 studentSchema.path('age').validate(function(age){
     return age >= 18 && age <=120;
 }); //doesnt let you create students if age is not in the interval, works best with a try catch block
+
+
+
+//update (modify) data default way
+
+singleStudent.name = "Djordji";
+
+await singleStudent.save();
+
+//update #1
+
+Student.updateOne({name: 'Marto', age: 25}, {name: 'Lubaka', age: 29}); // updates the first matched with the second parameter
+
+//delete
+
+await Student.deleteOne({name:'Lubaka'}); //deletes the first matched
+
+await Student.findByIdAndDelete('id'); // deletes by id (most accurate)
+
