@@ -51,7 +51,36 @@ const studentSchema = new Schema({
 
 const Student = model('Student', studentSchema);
 
+
+// Query all data from model
 const students = await Student.find();
 
 console.log(students);
 
+// Query filtered students
+
+const filteredStudents = await Student.find({age:20});
+console.log(filteredStudents);
+
+//insert data into DB #1
+
+// const newStudent = new Student({
+//     name: 'Marto',
+//     age: 25
+// });
+
+// await newStudent.save();
+
+//insert data into DB #2
+
+await Student.create({
+    name: 'Stefcho',
+    age: 22,
+});
+
+// can be taken as a variable
+
+const createdStudent = await Student.create({
+    name: 'Djefri',
+    age: 22
+});
