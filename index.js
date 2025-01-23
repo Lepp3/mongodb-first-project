@@ -124,3 +124,18 @@ await Student.deleteOne({name:'Lubaka'}); //deletes the first matched
 
 await Student.findByIdAndDelete('id'); // deletes by id (most accurate)
 
+
+
+//mongodb querry with or operator
+
+const resultStudents = await Student.find({
+    $or: [
+        {name: 'Marto'},
+        {age: {$lt: 20}},
+    ]
+})
+//mongoose querries
+const resultStudents2 = await Student.find()
+.where({name: 'Marto'})
+.or([{age: {$lt: 20}}]);
+
