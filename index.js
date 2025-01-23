@@ -73,14 +73,30 @@ console.log(filteredStudents);
 
 //insert data into DB #2
 
-await Student.create({
-    name: 'Stefcho',
-    age: 22,
-});
+// await Student.create({
+//     name: 'Stefcho',
+//     age: 22,
+// });
 
-// can be taken as a variable
+// // can be taken as a variable
 
-const createdStudent = await Student.create({
-    name: 'Djefri',
-    age: 22
-});
+// const createdStudent = await Student.create({
+//     name: 'Djefri',
+//     age: 22
+// });
+
+// add aditional method
+
+studentSchema.methods.getInfo = function (){
+    return `I am ${this.name} and I am ${this.age} years old.`
+};
+
+const singleStudent = await Student.findOne({age:20}); //returns the first object that meets the criteria
+
+console.log(singleStudent.getInfo());
+
+//create custom validation
+
+studentSchema.path('age').validate(function(age){
+    return age >= 18 && age <=120;
+}); //doesnt let you create students if age is not in the interval, works best with a try catch block
